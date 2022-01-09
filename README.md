@@ -20,7 +20,7 @@
   <p align="center">
     Warcraft III Lan Only Game Server Written in C# (.NET 6)
     <br />
-    <a href="https://github.com/ShahriyarB/Icecrown"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/ShahriyarB/Icecrown/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/ShahriyarB/Icecrown">Releases</a>
