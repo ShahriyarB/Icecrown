@@ -64,7 +64,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project started first as a port of uakfdotb/ghostpp to C# and then went under some heavy modifications to become a clean, organized and well documented project.
+This project started first as a port of [ghostpp](https://github.com/uakfdotb/ghostpp) to C# and then went under some heavy modifications to become a clean, organized and well documented project.
 It is written with the extensibility in mind, so a plugin system can be implemented later with the minimal effort. There is not any Battle.net connection code in this project, aim of this project is currently LAN only  for use in custom-made platforms like ICCup, RGC and others.
 
 Please note that this project is not production ready in its current state, it lacks some minor features which you can find below on this page and not yet tested in a big scale.
