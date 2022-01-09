@@ -108,7 +108,7 @@ Maps should be copied to maps folder.
 Some in game commands requires Moderator/Administrator role and can not be used by everyone, to make yourself admin you need to set your in game name to ```admin```.
 This will definitely change in the feature when we implement the user roles and database.
 
-To start the game you can use the ```start``` command. To see the available commands please refer to ```GameProtocol.cs``` file, all commands are registered there.
+To start the game you can use the ```/start``` command. To see the available commands and their usage type ```/help``` in chat.
 
 To modify the hostbot settings refer to ```settings.json``` file, this file should be near the binaries.
 If this file does not exist, a default ```settings.json``` file will be created at first launch.
