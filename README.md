@@ -23,7 +23,7 @@
     <a href="https://github.com/ShahriyarB/Icecrown/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ShahriyarB/Icecrown">Releases</a>
+    <a href="https://github.com/ShahriyarB/Icecrown/releases">Releases</a>
     ·
     <a href="https://github.com/ShahriyarB/Icecrown/issues">Report Bug</a>
     ·
