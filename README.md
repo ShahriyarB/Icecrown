@@ -224,7 +224,6 @@ Project Link: [https://github.com/ShahriyarB/Icecrown](https://github.com/Shahri
 [issues-shield]: https://img.shields.io/github/issues/ShahriyarB/Icecrown.svg?style=for-the-badge
 [issues-url]: https://github.com/ShahriyarB/Icecrown/issues
 [license-shield]: https://img.shields.io/github/license/ShahriyarB/Icecrown.svg?style=for-the-badge
-[license-url]: https://github.com/ShahriyarB/Icecrown/blob/master/LICENSE.txt
+[license-url]: https://github.com/ShahriyarB/Icecrown/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/shahriyarba
-[product-screenshot]: images/screenshot.png
