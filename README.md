@@ -4,8 +4,9 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
+[![Build][build-shield]][build-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![Apache-2.0 License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
@@ -227,5 +228,7 @@ Project Link: [https://github.com/ShahriyarB/Icecrown](https://github.com/Shahri
 [issues-url]: https://github.com/ShahriyarB/Icecrown/issues
 [license-shield]: https://img.shields.io/github/license/ShahriyarB/Icecrown.svg?style=for-the-badge
 [license-url]: https://github.com/ShahriyarB/Icecrown/blob/master/LICENSE
+[build-shield]: https://img.shields.io/github/workflow/status/ShahriyarB/Icecrown/.NET?style=for-the-badge
+[build-url]: https://github.com/ShahriyarB/Icecrown/actions
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/shahriyarba
