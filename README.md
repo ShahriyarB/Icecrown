@@ -146,7 +146,7 @@ This is an example of how ```settings.json``` can be:
    </div>
    <br />
 
-_For more information about ```settings.json``` file, please refer to the [Documentation](https://github.com/ShahriyarB/Icecrown)_
+_For more information about ```settings.json``` file, please refer to the [Documentation](https://github.com/ShahriyarB/Icecrown/wiki)_
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -159,6 +159,8 @@ _For more information about ```settings.json``` file, please refer to the [Docum
 - Implement database support
 - Implement user roles
 - Implement plugin system
+- Implement gproxy support
+- Implement match stats and ranking system
 
 
 See the [open issues](https://github.com/ShahriyarB/Icecrown/issues) for a full list of proposed features (and known issues).
