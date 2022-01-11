@@ -21,11 +21,11 @@ internal class ChatToHost : CommandMessage
     public ChatToHost(Memory<byte> memory)
         : base(memory)
     {
-        var total = this.Reader.ReadByte();
+        byte len = this.Reader.ReadByte();
 
-        this.ToPlayerIds = new byte[total];
+        this.ToPlayerIds = new byte[len];
 
-        for (byte i = 0; i < total; i++)
+        for (byte i = 0; i < len; i++)
         {
             this.ToPlayerIds[i] = this.Reader.ReadByte();
         }
@@ -41,14 +41,12 @@ internal class ChatToHost : CommandMessage
             case ChatToHostCommand.ChangeHandicap:
                 this.Arg = this.Reader.ReadByte();
                 break;
-            case ChatToHostCommand.Message:
-                this.Text = this.Reader.ReadNullTeminatedString();
-                break;
             case ChatToHostCommand.MessageExtra:
                 this.ExtraFlags = this.Reader.ReadBytes(4);
-                this.Text = this.Reader.ReadNullTeminatedString();
                 break;
         }
+
+        this.Message = this.Reader.ReadNullTeminatedString();
     }
 
     /// <summary>
@@ -79,7 +77,7 @@ internal class ChatToHost : CommandMessage
     /// <summary>
     /// Gets message this if it's a text command.
     /// </summary>
-    internal string? Text { get; }
+    internal string Message { get; }
 
     /// <inheritdoc/>
     internal override byte[] ToByteArray()
@@ -88,12 +86,7 @@ internal class ChatToHost : CommandMessage
         using (var writer = new BinaryWriter(stream))
         {
             writer.Write((byte)this.ToPlayerIds.Length);
-
-            foreach (var playerId in this.ToPlayerIds)
-            {
-                writer.Write(playerId);
-            }
-
+            writer.Write(this.ToPlayerIds);
             writer.Write(this.FromPlayerId);
             writer.Write((byte)this.Command);
 
@@ -103,16 +96,22 @@ internal class ChatToHost : CommandMessage
                 case ChatToHostCommand.ChangeColor:
                 case ChatToHostCommand.ChangeRace:
                 case ChatToHostCommand.ChangeHandicap:
-                    writer.Write(this.Arg ?? default);
-                    break;
-                case ChatToHostCommand.Message:
-                    writer.WriteString(this.Text ?? string.Empty);
+                    if (this.Arg is not null)
+                    { 
+                        writer.Write(this.Arg.Value);
+                    }
+
                     break;
                 case ChatToHostCommand.MessageExtra:
-                    writer.Write(this.ExtraFlags ?? Array.Empty<byte>());
-                    writer.WriteString(this.Text ?? string.Empty);
+                    if (this.ExtraFlags is not null)
+                    { 
+                        writer.Write(this.ExtraFlags);
+                    }
+
                     break;
             }
+
+            writer.WriteString(this.Message);
         }
 
         return stream.ToArray();

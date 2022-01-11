@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS game loaded self message.
+/// W3GS_GAMELOADED_SELF
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x23 (35)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class GameLoadedSelf : CommandMessage
 {

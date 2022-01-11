@@ -10,7 +10,8 @@ namespace Icecrown.Hostbot.Warcraft;
 [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1602:Enumeration items should be documented", Justification = "Reviewed")]
 internal enum RejectJoinReason : uint
 {
-    Full = 9,
-    Started = 10,
-    WrongPassword = 27,
+    Invalid = 0x7,
+    Full = 0x9,
+    Started = 0x10,
+    WrongPassword = 0x27,
 }

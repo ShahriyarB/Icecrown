@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS Join request message.
+/// W3GS_REJECTJOIN
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x05 (5)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class RejectJoin : CommandMessage
 {
@@ -15,6 +20,7 @@ internal class RejectJoin : CommandMessage
     /// <param name="reason">Rejection reason.</param>
     public RejectJoin(RejectJoinReason reason)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSRejectJoin;
         this.Reason = reason;
     }

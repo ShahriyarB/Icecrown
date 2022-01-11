@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS ping from host message.
+/// W3GS_PING_FROM_HOST
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x01 (1)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class PingFromHost : CommandMessage
 {
@@ -15,6 +20,7 @@ internal class PingFromHost : CommandMessage
     /// <param name="ticks">Ping time in ms.</param>
     public PingFromHost(uint ticks)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSPingFromHost;
         this.Ticks = ticks;
     }

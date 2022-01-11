@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS start download message.
+/// W3GS_STARTDOWNLOAD
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x3F (63)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class StartDownload : CommandMessage
 {
@@ -15,6 +20,7 @@ internal class StartDownload : CommandMessage
     /// <param name="fromPlayerId">From player id.</param>
     public StartDownload(byte fromPlayerId)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSStartDownload;
         this.FromPlayerId = fromPlayerId;
     }

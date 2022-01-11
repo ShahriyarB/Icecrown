@@ -4,10 +4,13 @@
 
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
-using Ionic.Crc;
-
 /// <summary>
-/// W3GS incoming action 2 message.
+/// W3GS_INCOMING_ACTION2
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x48 (72)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class IncomingAction2 : CommandMessage
 {
@@ -17,6 +20,7 @@ internal class IncomingAction2 : CommandMessage
     /// <param name="actions">Actions to send.</param>
     public IncomingAction2(OutgoingAction[] actions)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSIncomingAction2;
         this.Actions = actions;
     }

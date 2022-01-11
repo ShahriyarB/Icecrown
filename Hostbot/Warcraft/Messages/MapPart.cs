@@ -4,10 +4,13 @@
 
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
-using Ionic.Crc;
-
 /// <summary>
-/// W3GS map part message.
+/// W3GS_MAPPART
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x43 (67)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class MapPart : CommandMessage
 {
@@ -20,6 +23,7 @@ internal class MapPart : CommandMessage
     /// <param name="data">Full map data.</param>
     public MapPart(byte fromPlayerId, byte toPlayerId, uint start, byte[]? data)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSMapPart;
         this.FromPlayerId = fromPlayerId;
         this.ToPlayerId = toPlayerId;

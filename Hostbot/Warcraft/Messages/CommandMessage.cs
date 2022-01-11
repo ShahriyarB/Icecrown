@@ -63,7 +63,7 @@ internal abstract class CommandMessage
         var inner = this.ToByteArray();
         var final = new byte[inner.Length + 4];
 
-        final[0] = GameProtocol.W3GSHeaderConstant;
+        final[0] = this.Type;
         final[1] = this.Id;
         final[2] = (byte)((inner.Length + 4) & byte.MaxValue);
         final[3] = (byte)((inner.Length + 4) >> 8);

@@ -13,5 +13,6 @@ global using Icecrown.Hostbot.Warcraft.Messages;
 global using Icecrown.Shared;
 global using Icecrown.Shared.Warcraft;
 global using Icecrown.Tools.Mpq;
+global using Ionic.Crc;
 global using Serilog;
 #pragma warning restore SA1200 // Using directives should be placed correctly

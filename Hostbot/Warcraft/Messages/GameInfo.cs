@@ -6,7 +6,7 @@ namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
 /// W3GS_GAMEINFO
-/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Transport Layer:          Transmission Control Protocol (TCP) and UDP
 /// Application Layer:        Warcraft III In-Game Messages (W3GS)
 /// Message Id:               0x30 (48)
 /// Direction:                Server to Client
@@ -34,6 +34,7 @@ internal class GameInfo : CommandMessage
     /// <param name="entryKey">Game entry key.</param>
     public GameInfo(byte warcraftVersion, MapGameType mapGameType, uint mapFlags, ushort mapWidth, ushort mapHeight, string gameName, string hostName, uint upTime, string mapPath, byte[]? mapCrc, uint slotsTotal, uint slotsOpen, ushort port, uint hostCounter, uint entryKey)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSGameInfo;
         this.WarcraftVersion = warcraftVersion;
         this.MapGameType = mapGameType;
@@ -138,7 +139,16 @@ internal class GameInfo : CommandMessage
             statWriter.Write((byte)0);
             statWriter.Write(this.MapWidth);
             statWriter.Write(this.MapHeight);
-            statWriter.Write(this.MapCrc ?? Array.Empty<byte>());
+
+            if (this.MapCrc is null)
+            {
+                statWriter.Write(0);
+            }
+            else
+            {
+                statWriter.Write(this.MapCrc);
+            }
+            
             statWriter.WriteString(this.MapPath);
             statWriter.WriteString(this.HostName);
             statWriter.Write((byte)0);

@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS map check message.
+/// W3GS_MAPCHECK
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x3D (61)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class MapCheck : CommandMessage
 {
@@ -19,6 +24,7 @@ internal class MapCheck : CommandMessage
     /// <param name="mapSha1">Map sha1.</param>
     public MapCheck(string mapPath, uint mapSize, uint mapInfo, byte[]? mapCrc, byte[]? mapSha1)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSMapCheck;
         this.MapPath = mapPath;
         this.MapSize = mapSize;

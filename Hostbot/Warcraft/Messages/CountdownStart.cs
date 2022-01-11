@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS countdown start message.
+/// W3GS_COUNTDOWN_START
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x0A (10)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class CountdownStart : CommandMessage
 {
@@ -14,6 +19,7 @@ internal class CountdownStart : CommandMessage
     /// </summary>
     public CountdownStart()
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSCountdownStart;
     }
 

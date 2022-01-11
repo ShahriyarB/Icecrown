@@ -1,22 +1,28 @@
-﻿// <copyright file="PlayerLeaveOthers.cs" company="Shahriyar Bazaei">
+﻿// <copyright file="PlayerLeft.cs" company="Shahriyar Bazaei">
 // Copyright (c) Shahriyar Bazaei. All rights reserved.
 // </copyright>
 
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS Player leave message.
+/// W3GS_PLAYERLEFT
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x07 (7)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
-internal class PlayerLeaveOthers : CommandMessage
+internal class PlayerLeft : CommandMessage
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlayerLeaveOthers"/> class.
+    /// Initializes a new instance of the <see cref="PlayerLeft"/> class.
     /// </summary>
     /// <param name="playerId">Player id.</param>
     /// <param name="reason">Player leave reason.</param>
-    public PlayerLeaveOthers(byte playerId, PlayerLeaveReason reason)
+    public PlayerLeft(byte playerId, PlayerLeaveReason reason)
     {
-        this.Id = GameProtocol.W3GSPlayerLeaveOthers;
+        this.Type = GameProtocol.W3GSHeaderConstant;
+        this.Id = GameProtocol.W3GSPlayerLeft;
         this.PlayerId = playerId;
         this.Reason = reason;
     }

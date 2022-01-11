@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS chat from host message.
+/// W3GS_CHAT_FROM_HOST
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x0F (15)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class ChatFromHost : CommandMessage
 {
@@ -15,14 +20,17 @@ internal class ChatFromHost : CommandMessage
     /// <param name="fromPlayerId">From player id.</param>
     /// <param name="toPlayerIds">To player ids.</param>
     /// <param name="command">Chat command.</param>
+    /// <param name="arg">Chat arg (optional).</param>
     /// <param name="extraFlags">Chat extra flags.</param>
     /// <param name="message">Chat message.</param>
-    public ChatFromHost(byte fromPlayerId, byte[] toPlayerIds, ChatToHostCommand command, byte[] extraFlags, string message)
+    public ChatFromHost(byte fromPlayerId, byte[] toPlayerIds, ChatToHostCommand command, byte? arg, byte[]? extraFlags, string message)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSChatFromHost;
         this.FromPlayerId = fromPlayerId;
         this.ToPlayerIds = toPlayerIds;
         this.Command = command;
+        this.Arg = arg;
         this.ExtraFlags = extraFlags;
         this.Message = message;
     }
@@ -43,9 +51,14 @@ internal class ChatFromHost : CommandMessage
     internal ChatToHostCommand Command { get; }
 
     /// <summary>
+    /// Gets message argument if it's not a text command.
+    /// </summary>
+    internal byte? Arg { get; }
+
+    /// <summary>
     /// Gets chat flag extra.
     /// </summary>
-    internal byte[] ExtraFlags { get; }
+    internal byte[]? ExtraFlags { get; }
 
     /// <summary>
     /// Gets chat message.
@@ -62,7 +75,28 @@ internal class ChatFromHost : CommandMessage
             writer.Write(this.ToPlayerIds);
             writer.Write(this.FromPlayerId);
             writer.Write((byte)this.Command);
-            writer.Write(this.ExtraFlags);
+
+            switch (this.Command)
+            {
+                case ChatToHostCommand.ChangeTeam:
+                case ChatToHostCommand.ChangeColor:
+                case ChatToHostCommand.ChangeRace:
+                case ChatToHostCommand.ChangeHandicap:
+                    if (this.Arg is not null)
+                    { 
+                        writer.Write(this.Arg.Value);
+                    }
+
+                    break;
+                case ChatToHostCommand.MessageExtra:
+                    if (this.ExtraFlags is not null)
+                    { 
+                        writer.Write(this.ExtraFlags);
+                    }
+
+                    break;
+            }
+
             writer.WriteString(this.Message);
         }
 

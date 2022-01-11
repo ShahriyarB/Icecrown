@@ -36,14 +36,14 @@ internal class GameProtocol
     internal const byte W3GSPlayerInfo = 6;
 
     /// <summary>
-    /// W3GS player leave others message id.
+    /// W3GS player left message id.
     /// </summary>
-    internal const byte W3GSPlayerLeaveOthers = 7;
+    internal const byte W3GSPlayerLeft = 7;
 
     /// <summary>
-    /// W3GS game loaded others message id.
+    /// W3GS player loaded message id.
     /// </summary>
-    internal const byte W3GSGameLoadedOthers = 8;
+    internal const byte W3GSPlayerLoaded = 8;
 
     /// <summary>
     /// W3GS slot info message id.
@@ -124,6 +124,16 @@ internal class GameProtocol
     /// W3GS map part message id.
     /// </summary>
     internal const byte W3GSMapPart = 67;
+
+    /// <summary>
+    /// W3GS map part ok message id.
+    /// </summary>
+    internal const byte W3GSMapPartOk = 68;
+
+    /// <summary>
+    /// W3GS map part not ok message id.
+    /// </summary>
+    internal const byte W3GSMapPartNotOk = 69;
 
     /// <summary>
     /// W3GS pong to host message id.

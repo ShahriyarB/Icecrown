@@ -1,31 +1,38 @@
-﻿// <copyright file="CountdownEnd.cs" company="Shahriyar Bazaei">
+﻿// <copyright file="PlayerLoaded.cs" company="Shahriyar Bazaei">
 // Copyright (c) Shahriyar Bazaei. All rights reserved.
 // </copyright>
 
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS_COUNTDOWN_END
+/// W3GS_PLAYERLOADED
 /// Transport Layer:          Transmission Control Protocol (TCP)
 /// Application Layer:        Warcraft III In-Game Messages (W3GS)
-/// Message Id:               0x0B (11)
+/// Message Id:               0x08 (8)
 /// Direction:                Server to Client
 /// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
-internal class CountdownEnd : CommandMessage
+internal class PlayerLoaded : CommandMessage
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CountdownEnd"/> class.
+    /// Initializes a new instance of the <see cref="PlayerLoaded"/> class.
     /// </summary>
-    public CountdownEnd()
+    /// <param name="playerId">Player id.</param>
+    public PlayerLoaded(byte playerId)
     {
         this.Type = GameProtocol.W3GSHeaderConstant;
-        this.Id = GameProtocol.W3GSCountdownEnd;
+        this.Id = GameProtocol.W3GSPlayerLoaded;
+        this.PlayerId = playerId;
     }
+
+    /// <summary>
+    /// Gets player id.
+    /// </summary>
+    internal byte PlayerId { get; }
 
     /// <inheritdoc/>
     internal override byte[] ToByteArray()
     {
-        return Array.Empty<byte>();
+        return new byte[] { this.PlayerId };
     }
 }

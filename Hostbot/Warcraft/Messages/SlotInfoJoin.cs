@@ -5,7 +5,12 @@
 namespace Icecrown.Hostbot.Warcraft.Messages;
 
 /// <summary>
-/// W3GS Slot info join message.
+/// W3GS_SLOTINFOJOIN
+/// Transport Layer:          Transmission Control Protocol (TCP)
+/// Application Layer:        Warcraft III In-Game Messages (W3GS)
+/// Message Id:               0x04 (4)
+/// Direction:                Server to Client
+/// Used By:                  Warcraft III Reign of Chaos, Warcraft III The Frozen Throne.
 /// </summary>
 internal class SlotInfoJoin : CommandMessage
 {
@@ -21,6 +26,7 @@ internal class SlotInfoJoin : CommandMessage
     /// <param name="playerSlots">Player slots.</param>
     public SlotInfoJoin(byte playerId, ushort port, uint externalIp, List<IGameSlot> slots, uint randomSeed, byte layoutStyle, byte playerSlots)
     {
+        this.Type = GameProtocol.W3GSHeaderConstant;
         this.Id = GameProtocol.W3GSSlotInfoJoin;
         this.PlayerId = playerId;
         this.Port = port;

@@ -4,8 +4,6 @@
 
 namespace Icecrown.Hostbot;
 
-using System.Text.Json;
-
 /// <summary>
 /// Application entry point class.
 /// </summary>
@@ -23,6 +21,7 @@ internal static class Program
     private static readonly UdpClient UdpClient = new(new IPEndPoint(IPAddress.Any, ListenPort));
     private static ushort startPort = 6300;
     private static ushort hostCounter = 1;
+    private static bool running = true;
 
     /// <summary>
     /// Application entry point function.
@@ -40,9 +39,12 @@ internal static class Program
         // Initialize and load the app settings.
         _ = new Settings("settings.json");
 
+        // Start the custom broadcast thread.
+        // The only purpose of this thread is to send games information to users that are not on your LAN.
+        // If you don't need this functionality, you can safely comment the following line.
         ServerThread.Start();
 
-        while (true)
+        while (running)
         {
             for (int i = 0; i < Settings.Current.Hostbots.Count; i++)
             {
@@ -97,7 +99,7 @@ internal static class Program
 
     private static async void ListenThread()
     {
-        while (true)
+        while (running)
         {
             try
             {
@@ -118,9 +120,10 @@ internal static class Program
                         continue;
                     }
 
-                    // Find hostbots that are in lobby.
+                    // Find games that are in lobby state.
                     foreach (var hostbot in Hostbots.Where(h => h.GameState == GameState.Lobby))
                     {
+                        // Convert game information to warcraft readable byte array.
                         var bytes = hostbot.GameInfo.FinalByteArray();
 
                         // Broadcast lobby info to sender.
@@ -141,7 +144,7 @@ internal static class Program
     {
         List<byte> used = new();
 
-        foreach (var hostbot in Hostbots.Where(hb => hb.ConfigId == configId))
+        foreach (var hostbot in Hostbots.Where(hb => hb.ConfigId == configId && hb.GameState == GameState.Lobby))
         {
             // Extract id
             var split = hostbot.GameName.Split('#');
@@ -172,6 +175,9 @@ internal static class Program
 
     private static void CleanUp()
     {
+        running = false;
+
+        // Close all hostbots.
         foreach (var hostbot in Hostbots)
         {
             hostbot.Close();

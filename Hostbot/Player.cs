@@ -282,7 +282,7 @@ public class Player : IPlayer
         {
             foreach (var part in message.Chunk(byte.MaxValue - 1))
             {
-                this.SendMessage(new ChatFromHost(fromPlayerId, new byte[] { this.Id }, ChatToHostCommand.Message, Array.Empty<byte>(), new(part)));
+                this.SendMessage(new ChatFromHost(fromPlayerId, new byte[] { this.Id }, ChatToHostCommand.Message, null, null, new(part)));
             }
         }
         else
@@ -296,7 +296,7 @@ public class Player : IPlayer
                     extraFlags[0] = (byte)(3 + this.Slot.Color);
                 }
 
-                this.SendMessage(new ChatFromHost(fromPlayerId, new byte[] { this.Id }, ChatToHostCommand.MessageExtra, extraFlags, new(part)));
+                this.SendMessage(new ChatFromHost(fromPlayerId, new byte[] { this.Id }, ChatToHostCommand.MessageExtra, null, extraFlags, new(part)));
             }
         }
     }
@@ -516,6 +516,9 @@ public class Player : IPlayer
                 return true;
             case GameProtocol.W3GSPongToHost:
                 this.incomingQueue.Enqueue(new PongToHost(this.receiveBuffer));
+                return true;
+            case GameProtocol.W3GSMapPartOk:
+            case GameProtocol.W3GSMapPartNotOk:
                 return true;
             default:
                 Log.Warning($"Unknown message received 0x{this.receiveBuffer[1]:X2}");

@@ -429,7 +429,7 @@ namespace Icecrown.Hostbot
                 return;
             }
 
-            this.SendAll(new PlayerLeaveOthers(this.virtualHostPlayerId, PlayerLeaveReason.Lobby));
+            this.SendAll(new PlayerLeft(this.virtualHostPlayerId, PlayerLeaveReason.Lobby));
 
             this.virtualHostPlayerId = byte.MaxValue;
         }
@@ -448,14 +448,14 @@ namespace Icecrown.Hostbot
             {
                 foreach (var part in message.Chunk(byte.MaxValue - 1))
                 {
-                    this.SendAll(new ChatFromHost(fromPlayerId, this.Players.Select(p => p.Id).ToArray(), ChatToHostCommand.Message, Array.Empty<byte>(), new string(part)));
+                    this.SendAll(new ChatFromHost(fromPlayerId, this.Players.Select(p => p.Id).ToArray(), ChatToHostCommand.Message, null, null, new string(part)));
                 }
             }
             else
             {
                 foreach (var part in message.Chunk((byte.MaxValue - 1) / 2))
                 {
-                    this.SendAll(new ChatFromHost(fromPlayerId, this.Players.Select(p => p.Id).ToArray(), ChatToHostCommand.MessageExtra, new byte[] { 0, 0, 0, 0 }, new string(part)));
+                    this.SendAll(new ChatFromHost(fromPlayerId, this.Players.Select(p => p.Id).ToArray(), ChatToHostCommand.MessageExtra, null, new byte[] { 0, 0, 0, 0 }, new string(part)));
                 }
             }
         }
@@ -680,16 +680,16 @@ namespace Icecrown.Hostbot
                     if (chatToHost.ExtraFlags[0] == 0)
                     {
                         // In game [All] message.
-                        Log.Information($"[HB#{this.hostCounter}] [All] [{player.Name}] {chatToHost.Text}");
+                        Log.Information($"[HB#{this.hostCounter}] [All] [{player.Name}] {chatToHost.Message}");
                     }
                 }
                 else
                 {
                     // Lobby message.
-                    Log.Information($"[HB#{this.hostCounter}] [Lobby] [{player.Name}] {chatToHost.Text}");
+                    Log.Information($"[HB#{this.hostCounter}] [Lobby] [{player.Name}] {chatToHost.Message}");
                 }
 
-                if (string.IsNullOrEmpty(chatToHost.Text))
+                if (string.IsNullOrEmpty(chatToHost.Message))
                 {
                     return;
                 }
@@ -697,10 +697,10 @@ namespace Icecrown.Hostbot
                 bool relay = true;
 
                 // This text message is a command.
-                if (chatToHost.Text[0] == Settings.Current.CommandDelimiter && chatToHost.Text.Length > 1)
+                if (chatToHost.Message[0] == Settings.Current.CommandDelimiter && chatToHost.Message.Length > 1)
                 {
                     // Remove command delimiter then split the message.
-                    var args = chatToHost.Text[1..].Split(' ');
+                    var args = chatToHost.Message[1..].Split(' ');
 
                     // Don't relay chat message if the command executed successfully.
                     relay = !GameProtocol.PlayerSentCommand(this, player, args);
@@ -711,7 +711,7 @@ namespace Icecrown.Hostbot
                 {
                     foreach (var p in this.Players.Cast<Player>().Where(p => chatToHost.ToPlayerIds.Contains(p.Id)))
                     {
-                        p.SendMessage(new ChatFromHost(chatToHost.FromPlayerId, chatToHost.ToPlayerIds, chatToHost.Command, chatToHost.ExtraFlags ?? Array.Empty<byte>(), chatToHost.Text ?? string.Empty));
+                        p.SendMessage(new ChatFromHost(chatToHost.FromPlayerId, chatToHost.ToPlayerIds, chatToHost.Command, chatToHost.Arg, chatToHost.ExtraFlags, chatToHost.Message ?? string.Empty));
                     }
                 }
             }
@@ -743,7 +743,7 @@ namespace Icecrown.Hostbot
             player.Client?.Close();
 
             // Tell everyone about the player leaving.
-            this.SendAll(new PlayerLeaveOthers(player.Id, player.LeaveReasonCode));
+            this.SendAll(new PlayerLeft(player.Id, player.LeaveReasonCode));
 
             if (this.GameState == GameState.InGame)
             {
@@ -911,7 +911,7 @@ namespace Icecrown.Hostbot
 
             if (player.Id != byte.MaxValue)
             {
-                this.SendAll(new GameLoadedOthers(player.Id));
+                this.SendAll(new PlayerLoaded(player.Id));
             }
         }
 
@@ -1008,7 +1008,7 @@ namespace Icecrown.Hostbot
             foreach (var dummy in this.Players.Where(p => p.IsDummy))
             {
                 dummy.FinishedLoadingTicks = this.startedLoadingTicks;
-                this.SendAll(new GameLoadedOthers(dummy.Id));
+                this.SendAll(new PlayerLoaded(dummy.Id));
             }
 
             // Close the listening socket.
